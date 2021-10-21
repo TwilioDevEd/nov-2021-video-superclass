@@ -53,10 +53,6 @@ This will start a server that you can access on your
 local machine at port 5000 (`localhost:5000`). You can view the application
 at [http://localhost:5000](http://localhost:5000).
 
-> Note: If you are running MacOS Monterey, port 5000 might be in use, in which case the Flask server won't
-> be able to run on port 5000. You can either change the port that the server is running on, or turn off the
-> [AirPlay Receiver](https://developer.apple.com/forums/thread/682332), which will free up port 5000.
-
 Can't wait to see what you build with Twilio Video!
 
 ## Other branches
