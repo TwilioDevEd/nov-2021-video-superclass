@@ -2,7 +2,9 @@
 
 ## CURL request for token
 
-curl -X POST http://localhost:5000/token -H "Content-Type: application/json" -d '{"identity": "Sarah"}'
+curl -X POST http://localhost:5000/token \
+ -H "Content-Type: application/json" \
+ -d '{"identity": "Sarah"}'
 
 ## Video Room Monitor
 

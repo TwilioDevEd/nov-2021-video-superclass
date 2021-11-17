@@ -27,20 +27,25 @@ twilio_client = twilio.rest.Client(api_key, api_secret, account_sid)
 def find_or_create_room():
     """Find an existing Video Room, or create one if it doesn't exist."""
     try:
-        # Try to fetch an in-progress Video room with the name that's the value of the global
-        # ROOM_NAME variable
+        # Try to fetch an in-progress Video room with the name
+        # that's the value of the global ROOM_NAME variable
         room = twilio_client.video.rooms(ROOM_NAME).fetch()
     except twilio.base.exceptions.TwilioRestException:
-        # If an in-progress room with the name we tried to fetch doesn't exist, create one
+        # If an in-progress room with the name we tried to fetch
+        # doesn't exist, create one
         room = twilio_client.video.rooms.create(
             unique_name=ROOM_NAME,
             # constrain the number of allowed participants
             max_participants=MAX_PARTICIPANTS,
-            # use a group room (as opposed to `go` for WebRTC Go, or `p2p` for Peer rooms)
+            # use a group room (as opposed to `go` for WebRTC Go,
+            # or `p2p` for Peer rooms)
             type="group",
         )
     # Print how many participants the room has
-    print(f"{room.unique_name} has {len(room.participants.list())} participants in it.")
+    print(
+        f"{room.unique_name} has {len(room.participants.list())}"
+        " participants in it."
+        )
 
 
 @app.route("/")
@@ -52,18 +57,23 @@ def serve():
 
 @app.route("/token", methods=["POST"])
 def get_token():
-    """Create and return an Access Token for a specific participant to join the video room"""
-    # retrieve the participant's identity from the request's JSON payload
+    """Create and return an Access Token for a specific participant to
+    join the video room"""
+    # retrieve the participant's identity from the request's JSON
+    # payload
     identity = request.json.get("identity")
-    # create an access token with your account credentials and the participant's identity
+    # create an access token with your account credentials and
+    # the participant's identity
     access_token = twilio.jwt.access_token.AccessToken(
         account_sid, api_key, api_secret, identity=identity
     )
-    # create a video grant that will allow access to this app's specific video room
+    # create a video grant that will allow access to this app's
+    # specific video room
     video_grant = twilio.jwt.access_token.grants.VideoGrant(room=ROOM_NAME)
     # Add the video grant to the access token
     access_token.add_grant(video_grant)
-    # Turn the access token into a string and send it back as the response
+    # Turn the access token into a string and send it back as the
+    # response
     return {"token": access_token.to_jwt()}
 
 
